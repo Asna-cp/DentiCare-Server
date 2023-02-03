@@ -11,7 +11,6 @@ const cors = require('cors')
 //dotenv config
 dotenv.config();
 
-
 //rest object
 const app = express();
 
