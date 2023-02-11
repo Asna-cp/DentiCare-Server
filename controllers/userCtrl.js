@@ -1,12 +1,10 @@
-const userModel = require('../model/userModel')
-const bcrypt = require('bcryptjs')
-const jwt = require(`jsonwebtoken`)
+const userModel = require('../model/userModel');
+const bcrypt = require('bcryptjs');
+const jwt = require(`jsonwebtoken`);
 
 //register callback
 const registerController = async (req, res) => {
     try {
-        console.log("set");
-        console.log(req.body);
         const existingUser = await userModel.findOne({ email: req.body.email })
         if (existingUser) {
             return res.status(200).send({ message: 'user already exist', success: false })
@@ -24,23 +22,21 @@ const registerController = async (req, res) => {
     }
 }
 
-const loginController = async (req,res) => {
-    try{
-        const user = await userModel.findOne({email:req.body.email})
-        if(!user){
-            return res.status(200).send({message:`user not found`,success:false})
-
+const loginController = async (req, res) => {
+    try {
+        const user = await userModel.findOne({ email: req.body.email })
+        if (!user) {
+            return res.status(200).send({ message: `user not found`, success: false })
         }
         const isMatch = await bcrypt.compare(req.body.password, user.password)
-        if(!isMatch){
-            return res.status(200).send({message:"Invalid Email or Password",success:false})
+        if (!isMatch) {
+            return res.status(200).send({ message: "Invalid Email or Password", success: false })
         }
-        const token =jwt.sign({id:user.__id},process.env.JWT_SECRET,{expiresIn:`Id`})
-        res.status(200).send({message:"Login Success",success: true, token})
-    }catch (error) {
-        console.log(error);
-        res.status(500).send({message:`Error is Login CTRL ${error.message}`})
+        const token = jwt.sign({ id: user.__id }, process.env.JWT_SECRET, { expiresIn: `Id` })
+        res.status(200).send({ message: "Login Success", success: true, token })
+    } catch (error) {
+        res.status(500).send({ message: `Error is Login CTRL ${error.message}` })
     }
- };
+};
 
 module.exports = { loginController, registerController };
