@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const mongoose = require("mongoose")
 const dotenv = require('dotenv');
 const userRouter = require("./routes/userRoutes")
+const adminRouter = require("./routes/adminRoutes")
 const cors = require('cors')
 
 //dotenv config
@@ -20,6 +21,7 @@ app.use(cors())
 
 //routes
 app.use('/api/v1/user',userRouter);
+app.use('/admin',adminRouter);
 
 //port
 const port = process.env.PORT || 8080

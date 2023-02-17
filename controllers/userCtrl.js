@@ -1,6 +1,8 @@
 const userModel = require('../model/userModel');
 const bcrypt = require('bcryptjs');
 const jwt = require(`jsonwebtoken`);
+const doctorModel = require('../model/doctorModel');
+const treatmentModel = require('../model/treatmentModel');
 
 //register callback
 const registerController = async (req, res) => {
@@ -39,4 +41,22 @@ const loginController = async (req, res) => {
     }
 };
 
-module.exports = { loginController, registerController };
+const allpatients = async(req,res) => {
+    try{
+        const user = await userModel.find()
+        console.log(user);
+        return res.status(200).json(user)
+    }catch (error){
+res.json(error);
+    }
+
+};
+const getDoctor = async (req, res) => {
+    await doctorModel.find().then((data)=> res.json(data))
+};
+
+const viewTreatment = async (req, res) => {
+    await treatmentModel.find().then((data)=> res.json(data))
+}
+
+module.exports = { loginController, registerController,allpatients, getDoctor,viewTreatment };
