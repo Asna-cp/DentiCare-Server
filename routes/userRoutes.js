@@ -1,5 +1,5 @@
 const express = require('express')
-const { loginController, registerController,allpatients, getDoctor,viewTreatment } = require('../controllers/userCtrl')
+const { loginController, registerController,allpatients, getDoctor,viewTreatment,addAppointments } = require('../controllers/userCtrl')
 
 //router 
 const router = express.Router()
@@ -10,6 +10,7 @@ router.post('/login',loginController)
 
 //REGISTER || POST
 router.post('/register',registerController)
+router.post("/addAppointment",addAppointments);
 
 router.get("/allpatients",allpatients)
 router.get("/alldoctors",getDoctor)
