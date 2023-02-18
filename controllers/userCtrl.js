@@ -68,8 +68,7 @@ const allpatients = async (req, res) => {
 //ADD APPOINTMENT
 const addAppointments = async (req, res) => {
   try {
-    console.log('98765432345678');
-    const { name, lastName, email, phoneNumber,date,time } = req.body;
+    const { name, lastName, email, phoneNumber, date, time } = req.body;
     const data = await new appointmentModel({
       name,
       lastName,

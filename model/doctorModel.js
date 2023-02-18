@@ -14,9 +14,9 @@ const doctorSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    experience:{
+    experience: {
         type: Number,
-        required:true
+        required: true
     },
     image: {
         type: String,

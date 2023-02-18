@@ -4,19 +4,19 @@ const controller = require('../controllers/adminCtrl');
 //router 
 const router = express.Router();
 
-//ADDING ADMINSIDE
-router.post("/addDoctors",controller.addDoctors);
-router.post("/addTreatments",controller.addTreatments);
-router.post("/addBanner",controller.addBanner);
+//ADDING ADMIN SIDE
+router.post("/addDoctors", controller.addDoctors);
+router.post("/addTreatments", controller.addTreatments);
+router.post("/addBanner", controller.addBanner);
 
 
 
 
-//VIEW IN ADMINSIDE
-router.get("/allpatients",controller.allpatients);
-router.get("/alldoctors",controller.getDoctor);
-router.get("/alltreatments",controller.viewTreatment);
-router.get("/allappointments",controller.viewAppointments)
+//VIEW IN ADMIN SIDE
+router.get("/allpatients", controller.allpatients);
+router.get("/alldoctors", controller.getDoctor);
+router.get("/alltreatments", controller.viewTreatment);
+router.get("/allappointments", controller.viewAppointments)
 
 
 

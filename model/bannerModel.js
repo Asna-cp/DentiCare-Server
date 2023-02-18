@@ -14,7 +14,7 @@ const bannerSchema = new mongoose.Schema({
 
     },
     status: {
-        type:String,
+        type: String,
         required: true
     },
     update: {
@@ -23,4 +23,4 @@ const bannerSchema = new mongoose.Schema({
     }
 })
 
-module.exports = bannerModel = mongoose.model('BannerData',bannerSchema);
+module.exports = bannerModel = mongoose.model('BannerData', bannerSchema);

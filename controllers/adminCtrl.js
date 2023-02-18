@@ -13,7 +13,6 @@ module.exports = {
             return res.json(user);
         } catch (error) {
             res.json(error);
-
         }
     },
 
@@ -21,9 +20,6 @@ module.exports = {
     addDoctors: async (req, res) => {
         try {
             const { doctorName, specialist, discription, experience } = req.body
-            // const doctor = await doctorModel.create({doctorName,specialist,discription,experience})
-            // doctor.save()
-
             await new doctorModel({
                 discription,
                 doctorName,
@@ -43,9 +39,9 @@ module.exports = {
             return res.json(doctor);
         } catch (error) {
             res.json(error);
-
         }
     },
+
     //ADD TREATMENTS
     addTreatments: async (req, res) => {
         try {
@@ -73,7 +69,6 @@ module.exports = {
             const { bannerName, discription, status, update } = req.body
             const banner = await bannerModel.create({ bannerName, discription, status, update });
             return res.json(banner);
-
         } catch (error) {
             res.json(error);
         }
@@ -81,7 +76,6 @@ module.exports = {
     viewAppointments: async (req, res) => {
         try {
             const appointment = await appointmentModel.find({});
-    
             return res.json(appointment);
         } catch (error) {
             res.json(error);
