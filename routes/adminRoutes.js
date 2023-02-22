@@ -6,8 +6,11 @@ const router = express.Router();
 
 //ADDING ADMIN SIDE
 router.post("/addDoctors", controller.addDoctors);
+router.post("/addCategory", controller.addCategory);
 router.post("/addTreatments", controller.addTreatments);
 router.post("/addBanner", controller.addBanner);
+router.post("/removeDoctor/:id",controller.removeDoctor);
+router.post("/removePatients/:id",controller.removePatients);
 
 
 

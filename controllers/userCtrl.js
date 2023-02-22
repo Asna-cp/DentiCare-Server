@@ -5,6 +5,11 @@ const doctorModel = require("../model/doctorModel");
 const treatmentModel = require("../model/treatmentModel");
 const appointmentModel = require("../model/appointmentModel");
 
+//Token Generate Function
+const generateToken = (user) => {
+  return jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "24" });
+
+};
 //register callback
 const registerController = async (req, res) => {
   try {
@@ -19,42 +24,63 @@ const registerController = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
     req.body.password = hashedPassword;
     const newUser = new userModel(req.body);
-    await newUser.save();
-    res.status(201).send({ message: "Register successfully", success: true });
+    await newUser.save()
+      .then((user) => {
+        const token = generateToken(user);
+        res.
+          status(201)
+          .send({ message: "Register successfully", status: true, token });
+      })
+      .catch((error) => res.status(200).send({ error, status: false }))
   } catch (error) {
-    res
-      .status(500)
-      .send({
-        success: false,
-        message: `Register Controller ${error.message}`,
-      });
+    console.log(error);
+
+    return res.status(500).send(error);
   }
 };
 
 //Login
 const loginController = async (req, res) => {
+ 
+  const { email, password } = req.body;
   try {
-    const user = await userModel.findOne({ email: req.body.email });
-    if (!user) {
-      return res
-        .status(200)
-        .send({ message: `user not found`, success: false });
-    }
-    const isMatch = await bcrypt.compare(req.body.password, user.password);
-    if (!isMatch) {
-      return res
-        .status(200)
-        .send({ message: "Invalid Email or Password", success: false });
-    }
-    const token = jwt.sign({ id: user.__id }, process.env.JWT_SECRET, {
-      expiresIn: `Id`,
-    });
-    res.status(200).send({ message: "Login Success", success: true, token });
-  } catch (error) {
-    res.status(500).send({ message: `Error is Login CTRL ${error.message}` });
-  }
-};
+  const user = await userModel
+    .findOne({ email })
+    .then((user) => {
+      bcrypt
+        .compare(password, user.password)
+        .then((checkPass) => {
+          if (!checkPass)
+            return res.status(400)
+              .send({ status: false, error: "Password does not match" });
 
+          const token = generateToken(user);
+          return res.status(200).send({
+            msg: "Login Success",
+            userName: user.name,
+            token,
+            status: true,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+
+          res
+            .status(400)
+            .send({ status: false, error: "Password does not match" })
+        });
+    })
+    .catch((error) => {
+      console.log(error);
+
+      res.status(404).send({ status: false, error: "Email not found" })
+ });
+} catch (error) {
+  console.log(error);
+
+};
+}
+    
 // ADD PATIENTS
 const allpatients = async (req, res) => {
   try {

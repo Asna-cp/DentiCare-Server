@@ -3,6 +3,7 @@ const userModel = require("../model/userModel");
 const treatmentModel = require("../model/treatmentModel");
 const bannerModel = require("../model/bannerModel");
 const appointmentModel = require("../model/appointmentModel");
+const CategoryModel = require("../model/categoryModel");
 
 module.exports = {
 
@@ -16,6 +17,13 @@ module.exports = {
         }
     },
 
+        //REMOVE PATIENTS
+        removePatients:async (req, res) => {
+            let id = req.params.id;
+            await userModel.findByIdAndDelete({ _id: id});
+            res.json("success");
+        },
+    
     //ADD DOCTORS
     addDoctors: async (req, res) => {
         try {
@@ -30,6 +38,19 @@ module.exports = {
         } catch (error) {
             res.json(error);
         }
+    }, 
+
+    //ADD CATEGORY(DOCTOR SPECIALISED)
+    addCategory: async (req, res) => {
+        try {
+            const { categoryName } = req.body
+            await new CategoryModel({
+                categoryName
+            }) .save()
+            return res.json(category);
+        } catch (error) {
+            res.json(error);
+        }
     },
 
     //VIEW DOCTORS
@@ -40,6 +61,13 @@ module.exports = {
         } catch (error) {
             res.json(error);
         }
+    },
+
+    //REMOVE DOCTORS
+    removeDoctor:async (req, res) => {
+        let id = req.params.id;
+        await doctorModel.findByIdAndDelete({ _id: id});
+        res.json("success");
     },
 
     //ADD TREATMENTS
