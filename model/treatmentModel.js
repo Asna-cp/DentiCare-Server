@@ -6,7 +6,7 @@ const treatmentSchema = new mongoose.Schema({
         type: String,
         required: [true, 'name is require']
     },
-    discription: {
+    description: {
         type: String,
         required: true
     },

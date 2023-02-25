@@ -11,6 +11,7 @@ router.post("/addTreatments", controller.addTreatments);
 router.post("/addBanner", controller.addBanner);
 router.post("/removeDoctor/:id",controller.removeDoctor);
 router.post("/removePatients/:id",controller.removePatients);
+router.post("/removeTreatments/:id",controller.removeTreatments);
 
 
 

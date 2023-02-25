@@ -7,7 +7,7 @@ const appointmentModel = require("../model/appointmentModel");
 
 //Token Generate Function
 const generateToken = (user) => {
-  return jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "24" });
+  return jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "20D" });
 
 };
 //register callback
@@ -33,54 +33,46 @@ const registerController = async (req, res) => {
       })
       .catch((error) => res.status(200).send({ error, status: false }))
   } catch (error) {
-    console.log(error);
-
     return res.status(500).send(error);
   }
 };
 
 //Login
 const loginController = async (req, res) => {
- 
+
   const { email, password } = req.body;
   try {
-  const user = await userModel
-    .findOne({ email })
-    .then((user) => {
-      bcrypt
-        .compare(password, user.password)
-        .then((checkPass) => {
-          if (!checkPass)
-            return res.status(400)
-              .send({ status: false, error: "Password does not match" });
+    const user = await userModel
+      .findOne({ email })
+      .then((user) => {
+        bcrypt
+          .compare(password, user.password)
+          .then((checkPass) => {
+            if (!checkPass)
+              return res.status(400)
+                .send({ status: false, error: "Password does not match" });
 
-          const token = generateToken(user);
-          return res.status(200).send({
-            msg: "Login Success",
-            userName: user.name,
-            token,
-            status: true,
+            const token = generateToken(user);
+            return res.status(200).send({
+              msg: "Login Success",
+              userName: user.name,
+              token,
+              status: true,
+            });
+          })
+          .catch((error) => {
+            res
+              .status(400)
+              .send({ status: false, error: "Password does not match" })
           });
-        })
-        .catch((error) => {
-          console.log(error);
-
-          res
-            .status(400)
-            .send({ status: false, error: "Password does not match" })
-        });
-    })
-    .catch((error) => {
-      console.log(error);
-
-      res.status(404).send({ status: false, error: "Email not found" })
- });
-} catch (error) {
-  console.log(error);
-
+      })
+      .catch((error) => {
+        res.status(404).send({ status: false, error: "Email not found" })
+      });
+  } catch (error) {
+  }
 };
-}
-    
+
 // ADD PATIENTS
 const allpatients = async (req, res) => {
   try {
@@ -119,6 +111,22 @@ const viewTreatment = async (req, res) => {
   await treatmentModel.find().then((data) => res.json(data));
 };
 
+//USER PROFILE
+
+const profile = (req, res) => {
+  const token = req.headers.authorization.split(" ")[1]
+  if (token) {
+    jwt.verify(token, process.env.JWT_SECRET, {}, async (error, userData) => {
+      if (error) throw error;
+      const user = await userModel.findById(userData.userId);
+      res.json({ user });
+    });
+  } else {
+    res.json(null);
+  }
+};
+
+
 module.exports = {
   loginController,
   registerController,
@@ -126,4 +134,6 @@ module.exports = {
   getDoctor,
   viewTreatment,
   addAppointments,
+  profile,
+
 };

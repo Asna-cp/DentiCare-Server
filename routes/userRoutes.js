@@ -5,7 +5,8 @@ const {
     allpatients,
     getDoctor,
     viewTreatment,
-    addAppointments
+    addAppointments,
+    profile,
 } = require('../controllers/userCtrl')
 
 //router 
@@ -22,6 +23,7 @@ router.post("/addAppointment", addAppointments);
 router.get("/allpatients", allpatients)
 router.get("/alldoctors", getDoctor)
 router.get("/alltreatments", viewTreatment)
+router.get("/profile", profile)
 
 
 module.exports = router;

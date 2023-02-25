@@ -17,13 +17,13 @@ module.exports = {
         }
     },
 
-        //REMOVE PATIENTS
-        removePatients:async (req, res) => {
-            let id = req.params.id;
-            await userModel.findByIdAndDelete({ _id: id});
-            res.json("success");
-        },
-    
+    //REMOVE PATIENTS
+    removePatients: async (req, res) => {
+        let id = req.params.id;
+        await userModel.findByIdAndDelete({ _id: id });
+        res.json("success");
+    },
+
     //ADD DOCTORS
     addDoctors: async (req, res) => {
         try {
@@ -38,7 +38,7 @@ module.exports = {
         } catch (error) {
             res.json(error);
         }
-    }, 
+    },
 
     //ADD CATEGORY(DOCTOR SPECIALISED)
     addCategory: async (req, res) => {
@@ -46,7 +46,7 @@ module.exports = {
             const { categoryName } = req.body
             await new CategoryModel({
                 categoryName
-            }) .save()
+            }).save()
             return res.json(category);
         } catch (error) {
             res.json(error);
@@ -64,23 +64,23 @@ module.exports = {
     },
 
     //REMOVE DOCTORS
-    removeDoctor:async (req, res) => {
+    removeDoctor: async (req, res) => {
         let id = req.params.id;
-        await doctorModel.findByIdAndDelete({ _id: id});
+        await doctorModel.findByIdAndDelete({ _id: id });
         res.json("success");
     },
 
     //ADD TREATMENTS
     addTreatments: async (req, res) => {
         try {
-            const { treatmentname, discription, about } = req.body
-            const treatment = await treatmentModel.create({ treatmentname, discription, about });
+            const { treatmentname, description, about } = req.body
+            const treatment = await treatmentModel.create({ treatmentname, description, about });
             return res.json(treatment);
         } catch (error) {
             res.json(error);
         }
     },
-    
+
     //VIEM TREATMENTS 
     viewTreatment: async (req, res) => {
         try {
@@ -89,6 +89,13 @@ module.exports = {
         } catch (error) {
             res.json(error);
         }
+    },
+
+    //REMOVE TREATMENTS
+    removeTreatments: async (req, res) => {
+        let id = req.params.id;
+        await treatmentModel.findByIdAndDelete({ _id: id });
+        res.json("success")
     },
 
     //ADD BANNER
