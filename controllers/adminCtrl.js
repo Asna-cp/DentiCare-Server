@@ -4,6 +4,7 @@ const treatmentModel = require("../model/treatmentModel");
 const bannerModel = require("../model/bannerModel");
 const appointmentModel = require("../model/appointmentModel");
 const CategoryModel = require("../model/categoryModel");
+const fileUploader = require("../cloudinary/fileUploader");
 
 module.exports = {
 
@@ -27,15 +28,23 @@ module.exports = {
     //ADD DOCTORS
     addDoctors: async (req, res) => {
         try {
-            const { doctorName, specialist, discription, experience } = req.body
-            await new doctorModel({
-                discription,
-                doctorName,
-                experience,
-                specialist,
-            }).save()
-            return res.json(doctor);
-        } catch (error) {
+            const { doctorName, specialist, description, experience } = req.body.values
+            const {image}=req.body
+            fileUploader(image)
+                .then(async (img) => {
+                    await new doctorModel({
+                        description,
+                        doctorName,
+                        experience,
+                        image: img,
+                        specialist,
+                    }).save()
+                    return res.json({status:true});
+                }).catch ((error)=> {
+                    console.log(error);
+                }) 
+            } catch (error) {
+            console.log(error);
             res.json(error);
         }
     },
@@ -57,7 +66,7 @@ module.exports = {
     getDoctor: async (req, res) => {
         try {
             const user = await doctorModel.find({});
-            return res.json(doctor);
+            return res.json(user);
         } catch (error) {
             res.json(error);
         }
@@ -84,8 +93,7 @@ module.exports = {
     //VIEM TREATMENTS 
     viewTreatment: async (req, res) => {
         try {
-            const user = await treatmentModel.find({});
-            return res.json(treatment);
+            await treatmentModel.find().then((data) => res.json(data));
         } catch (error) {
             res.json(error);
         }
@@ -101,8 +109,8 @@ module.exports = {
     //ADD BANNER
     addBanner: async (req, res) => {
         try {
-            const { bannerName, discription, status, update } = req.body
-            const banner = await bannerModel.create({ bannerName, discription, status, update });
+            const { bannerName, description, status, update } = req.body
+            const banner = await bannerModel.create({ bannerName, description, status, update });
             return res.json(banner);
         } catch (error) {
             res.json(error);

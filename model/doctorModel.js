@@ -10,17 +10,21 @@ const doctorSchema = new mongoose.Schema({
         required: [true, 'Specialist is require']
     },
 
-    discription: {
+    description: {
         type: String,
         required: true
     },
+
+    image: {
+        type: String,
+       
+    },
+    
     experience: {
         type: Number,
         required: true
     },
-    image: {
-        type: String,
-    },
+  
 
 })
 
