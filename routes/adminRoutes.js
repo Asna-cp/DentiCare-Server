@@ -20,7 +20,12 @@ router.post("/removeTreatments/:id",controller.removeTreatments);
 router.get("/allpatients", controller.allpatients);
 router.get("/alldoctors", controller.getDoctor);
 router.get("/alltreatments", controller.viewTreatment);
-router.get("/allappointments", controller.viewAppointments)
+router.get("/allappointments", controller.viewAppointments);
+
+//DashBoard
+router.get("/getDoctorCount",controller.getDoctorCount);
+router.get("/patientsCount",controller.patientsCount);
+router.get("/appointmentsCount",controller.appointmentsCount);
 
 
 

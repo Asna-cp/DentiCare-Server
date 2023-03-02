@@ -10,6 +10,10 @@ const treatmentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    image: {
+        type: String,
+       
+    },
     about: {
         type: String,
         required: true

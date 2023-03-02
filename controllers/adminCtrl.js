@@ -18,6 +18,16 @@ module.exports = {
         }
     },
 
+    //PATIENTS COUNT
+    patientsCount: async (req, res) => {
+        try {
+            const count = await userModel.find({}).countDocuments();
+            return res.json(count);
+        } catch (error) {
+            res.json(error);
+        }
+    },
+
     //REMOVE PATIENTS
     removePatients: async (req, res) => {
         let id = req.params.id;
@@ -29,6 +39,8 @@ module.exports = {
     addDoctors: async (req, res) => {
         try {
             const { doctorName, specialist, description, experience } = req.body.values
+
+            //IMAGE
             const {image}=req.body
             fileUploader(image)
                 .then(async (img) => {
@@ -66,10 +78,23 @@ module.exports = {
     getDoctor: async (req, res) => {
         try {
             const user = await doctorModel.find({});
+            // .countDocuments()
             return res.json(user);
         } catch (error) {
             res.json(error);
         }
+    },
+
+    //Count Doctors(DASHBOARD)
+    getDoctorCount: async (req, res) => {
+        try {
+            const count = await doctorModel.find({}).countDocuments()
+            console.log(count);
+            return res.json(count);
+        } catch (error) {
+            res.json(error);
+        }
+
     },
 
     //REMOVE DOCTORS
@@ -82,9 +107,24 @@ module.exports = {
     //ADD TREATMENTS
     addTreatments: async (req, res) => {
         try {
-            const { treatmentname, description, about } = req.body
-            const treatment = await treatmentModel.create({ treatmentname, description, about });
-            return res.json(treatment);
+            const { treatmentname, description, about } = req.body.values
+            const {image}=req.body
+            fileUploader(image)
+            .then(async (img) => {
+                await new treatmentModel({
+                    treatmentname,
+                    description,
+                    image,
+                    about,
+
+
+                }).save()
+                return res.json({status:true});
+            }).catch ((error) => {
+                console.log(error);
+            })
+            // const treatment = await treatmentModel.create({ treatmentname, description, about });
+            // return res.json(treatment);
         } catch (error) {
             res.json(error);
         }
@@ -116,6 +156,8 @@ module.exports = {
             res.json(error);
         }
     },
+
+    //VIEW APPOINTMENTS
     viewAppointments: async (req, res) => {
         try {
             const appointment = await appointmentModel.find({});
@@ -124,5 +166,16 @@ module.exports = {
             res.json(error);
         }
     },
+
+    //APPOINTMENT COUNT
+    appointmentsCount: async (req, res) => {
+        try {
+            const count = await appointmentModel.find({}).countDocuments();
+            return res.json(count);
+        } catch (error) {
+            res.json(error);
+        }
+    }
+
 
 };
