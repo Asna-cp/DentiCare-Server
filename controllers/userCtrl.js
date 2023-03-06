@@ -86,9 +86,10 @@ const allpatients = async (req, res) => {
 //ADD APPOINTMENT
 const addAppointments = async (req, res) => {
   try {
-    const { name, lastName, email, phoneNumber, date, time } = req.body;
+    console.log(req.body);
+    const {firstName, lastName, email, phoneNumber, date, time } = req.body;
     const data = await new appointmentModel({
-      name,
+      firstName,
       lastName,
       email,
       phoneNumber,
@@ -111,6 +112,10 @@ const viewTreatment = async (req, res) => {
   await treatmentModel.find().then((data) => res.json(data));
 };
 
+//DOCTOR DETAILS
+const doctorDetails = async (req, res) => {
+  await doctorModel.find().then((data) => res.json(data));
+};
 //USER PROFILE
 
 const profile = (req, res) => {
@@ -135,5 +140,6 @@ module.exports = {
   viewTreatment,
   addAppointments,
   profile,
+  doctorDetails,
 
 };

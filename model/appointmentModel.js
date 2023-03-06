@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const objectid = mongoose.Types.ObjectId
 const appointmentSchema = new mongoose.Schema({
-    name: {
+    firstName: {
         type: String,
         required: [true, 'name is require']
     },

@@ -1,4 +1,5 @@
 const express = require('express')
+// const { default: doctorDetails } = require('../../client/src/pages/Doctors/doctorDetails')
 const {
     loginController,
     registerController,
@@ -7,6 +8,7 @@ const {
     viewTreatment,
     addAppointments,
     profile,
+    doctorDetails,
 } = require('../controllers/userCtrl')
 
 //router 
@@ -24,6 +26,7 @@ router.get("/allpatients", allpatients)
 router.get("/alldoctors", getDoctor)
 router.get("/alltreatments", viewTreatment)
 router.get("/profile", profile)
+router.get("/doctorDetails",doctorDetails)
 
 
 module.exports = router;

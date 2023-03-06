@@ -13,9 +13,6 @@ router.post("/removeDoctor/:id",controller.removeDoctor);
 router.post("/removePatients/:id",controller.removePatients);
 router.post("/removeTreatments/:id",controller.removeTreatments);
 
-
-
-
 //VIEW IN ADMIN SIDE
 router.get("/allpatients", controller.allpatients);
 router.get("/alldoctors", controller.getDoctor);
@@ -23,9 +20,11 @@ router.get("/alltreatments", controller.viewTreatment);
 router.get("/allappointments", controller.viewAppointments);
 
 //DashBoard
-router.get("/getDoctorCount",controller.getDoctorCount);
-router.get("/patientsCount",controller.patientsCount);
-router.get("/appointmentsCount",controller.appointmentsCount);
+// router.get("/getDoctorCount",controller.getDoctorCount);
+// router.get("/patientsCount",controller.patientsCount);
+// router.get("/appointmentsCount",controller.appointmentsCount);
+
+router.get("/allCounts",controller.allCounts)
 
 
 

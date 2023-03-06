@@ -18,16 +18,6 @@ module.exports = {
         }
     },
 
-    //PATIENTS COUNT
-    patientsCount: async (req, res) => {
-        try {
-            const count = await userModel.find({}).countDocuments();
-            return res.json(count);
-        } catch (error) {
-            res.json(error);
-        }
-    },
-
     //REMOVE PATIENTS
     removePatients: async (req, res) => {
         let id = req.params.id;
@@ -41,7 +31,7 @@ module.exports = {
             const { doctorName, specialist, description, experience } = req.body.values
 
             //IMAGE
-            const {image}=req.body
+            const { image } = req.body
             fileUploader(image)
                 .then(async (img) => {
                     await new doctorModel({
@@ -51,12 +41,10 @@ module.exports = {
                         image: img,
                         specialist,
                     }).save()
-                    return res.json({status:true});
-                }).catch ((error)=> {
-                    console.log(error);
-                }) 
-            } catch (error) {
-            console.log(error);
+                    return res.json({ status: true });
+                }).catch((error) => {
+                })
+        } catch (error) {
             res.json(error);
         }
     },
@@ -78,23 +66,10 @@ module.exports = {
     getDoctor: async (req, res) => {
         try {
             const user = await doctorModel.find({});
-            // .countDocuments()
             return res.json(user);
         } catch (error) {
             res.json(error);
         }
-    },
-
-    //Count Doctors(DASHBOARD)
-    getDoctorCount: async (req, res) => {
-        try {
-            const count = await doctorModel.find({}).countDocuments()
-            console.log(count);
-            return res.json(count);
-        } catch (error) {
-            res.json(error);
-        }
-
     },
 
     //REMOVE DOCTORS
@@ -108,21 +83,18 @@ module.exports = {
     addTreatments: async (req, res) => {
         try {
             const { treatmentname, description, about } = req.body.values
-            const {image}=req.body
+            const { image } = req.body
             fileUploader(image)
-            .then(async (img) => {
-                await new treatmentModel({
-                    treatmentname,
-                    description,
-                    image,
-                    about,
-
-
-                }).save()
-                return res.json({status:true});
-            }).catch ((error) => {
-                console.log(error);
-            })
+                .then(async (img) => {
+                    await new treatmentModel({
+                        treatmentname,
+                        description,
+                        image,
+                        about,
+                    }).save()
+                    return res.json({ status: true });
+                }).catch((error) => {
+                })
             // const treatment = await treatmentModel.create({ treatmentname, description, about });
             // return res.json(treatment);
         } catch (error) {
@@ -166,16 +138,19 @@ module.exports = {
             res.json(error);
         }
     },
-
-    //APPOINTMENT COUNT
-    appointmentsCount: async (req, res) => {
+    //ALL COUNTS(DASHBOARD)
+    allCounts: async (req, res) => {
         try {
-            const count = await appointmentModel.find({}).countDocuments();
-            return res.json(count);
+            const doctorsCount = await doctorModel.find({}).countDocuments();
+            const patientsCount = await userModel.find({}).countDocuments();
+            const appointmentsCount = await appointmentModel.find({}).countDocuments();
+            const treatmentsCount = await treatmentModel.find({}).countDocuments();
+            const all = { doctorsCount, patientsCount, appointmentsCount, treatmentsCount }
+            return res.json(all);
         } catch (error) {
             res.json(error);
         }
-    }
 
+    },
 
 };
