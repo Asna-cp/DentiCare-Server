@@ -5,13 +5,15 @@ const controller = require('../controllers/adminCtrl');
 const router = express.Router();
 
 //ADDING ADMIN SIDE
+router.post("/login", controller.loginController);
+
 router.post("/addDoctors", controller.addDoctors);
 router.post("/addCategory", controller.addCategory);
 router.post("/addTreatments", controller.addTreatments);
 router.post("/addBanner", controller.addBanner);
-router.post("/removeDoctor/:id",controller.removeDoctor);
-router.post("/removePatients/:id",controller.removePatients);
-router.post("/removeTreatments/:id",controller.removeTreatments);
+router.post("/removeDoctor/:id", controller.removeDoctor);
+router.post("/removePatients/:id", controller.removePatients);
+router.post("/removeTreatments/:id", controller.removeTreatments);
 
 //VIEW IN ADMIN SIDE
 router.get("/allpatients", controller.allpatients);
@@ -24,7 +26,7 @@ router.get("/allappointments", controller.viewAppointments);
 // router.get("/patientsCount",controller.patientsCount);
 // router.get("/appointmentsCount",controller.appointmentsCount);
 
-router.get("/allCounts",controller.allCounts)
+router.get("/allCounts", controller.allCounts)
 
 
 

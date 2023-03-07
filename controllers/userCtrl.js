@@ -39,7 +39,6 @@ const registerController = async (req, res) => {
 
 //Login
 const loginController = async (req, res) => {
-
   const { email, password } = req.body;
   try {
     const user = await userModel
@@ -87,7 +86,7 @@ const allpatients = async (req, res) => {
 const addAppointments = async (req, res) => {
   try {
     console.log(req.body);
-    const {firstName, lastName, email, phoneNumber, date, time } = req.body;
+    const { firstName, lastName, email, phoneNumber, date, time } = req.body;
     const data = await new appointmentModel({
       firstName,
       lastName,
