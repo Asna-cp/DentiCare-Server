@@ -4,12 +4,12 @@ const mongoose = require("mongoose")
 const dotenv = require('dotenv');
 const userRouter = require("./routes/userRoutes")
 const adminRouter = require("./routes/adminRoutes")
+const doctorRouter = require('./routes/adminRoutes')
 const cors = require('cors')
 const morgan = require('morgan');
 
 //dotenv config
 dotenv.config();
-
 
 //rest object
 const app = express();
@@ -29,6 +29,7 @@ app.use(cors())
 //routes
 app.use('/api/v1/user', userRouter);
 app.use('/admin', adminRouter);
+app.use('/doctor', doctorRouter);
 
 //port
 const port = process.env.PORT || 8080

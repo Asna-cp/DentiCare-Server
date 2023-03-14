@@ -101,8 +101,23 @@ const addAppointments = async (req, res) => {
   }
 };
 
+//CHECK APPOINTMENTS COUNT
+
+const checkAppoTime = async (req, res) => {
+  console.log("ethi");
+try{
+const { time,date } = req.query;
+  const appointments = await appointmentModel.find({time,date}).countDocuments();
+  console.log(appointments);
+  res.status(200).json(appointments)
+}catch(err){
+  res.status(500).json(err)
+}
+}
+
 // VIEW DOCTORS
 const getDoctor = async (req, res) => {
+ 
   await doctorModel.find().then((data) => res.json(data));
 };
 
@@ -140,5 +155,5 @@ module.exports = {
   addAppointments,
   profile,
   doctorDetails,
-
+  checkAppoTime,
 };

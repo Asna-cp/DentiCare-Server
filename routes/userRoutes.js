@@ -9,6 +9,7 @@ const {
     addAppointments,
     profile,
     doctorDetails,
+    checkAppoTime,
 } = require('../controllers/userCtrl')
 
 //router 
@@ -20,7 +21,8 @@ router.post('/login', loginController)
 
 //REGISTER || POST
 router.post('/register', registerController)
-router.post("/addAppointment", addAppointments);
+
+router.route("/addAppointment").get(checkAppoTime).post(addAppointments);
 
 router.get("/allpatients", allpatients)
 router.get("/alldoctors", getDoctor)
