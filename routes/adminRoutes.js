@@ -14,6 +14,10 @@ router.post("/addBanner", controller.addBanner);
 router.post("/removeDoctor/:id", controller.removeDoctor);
 router.post("/removePatients/:id", controller.removePatients);
 router.post("/removeTreatments/:id", controller.removeTreatments);
+router.post("/removeAppointment/:id", controller.removeAppointment);
+
+router.post('/cancelAppointment/:id', controller.cancelAppointment)
+router.post('/confirmAppointment/:id', controller.confirmAppointment)
 
 //VIEW IN ADMIN SIDE
 router.get("/allpatients", controller.allpatients);

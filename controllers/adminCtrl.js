@@ -18,6 +18,7 @@ const generateToken = (admin) => {
 module.exports = {
   //Login
   loginController: async (req, res) => {
+    console.log(req.body);
     const { email, password } = req.body.values;
     try {
       const admin = await adminModel
@@ -30,6 +31,7 @@ module.exports = {
                 return res
                   .status(400)
                   .send({ status: false, error: "Password does not match" });
+           
               const adminToken = generateToken(admin);
               return res.status(200).send({
                 msg: "Login Success",
@@ -104,6 +106,12 @@ module.exports = {
     } catch (error) {
       res.json(error);
     }
+  },
+  deletecategory: async (req, res) => {
+    let id = req.params.id;
+    //console.log("delete")
+    await CategoryModel.findByIdAndDelete({ _id: id });
+    res.json("success");
   },
 
   //VIEW DOCTORS
@@ -206,5 +214,31 @@ module.exports = {
     } catch (error) {
       res.json(error);
     }
+  },
+  //REMOVE APPOINTMENTS
+  removeAppointment: async (req, res) => {
+    let id = req.params.id;
+    await appointmentModel.findByIdAndDelete({ _id: id });
+    res.json("success");
+  },
+
+  //CANCEL APPOINTMENT
+  cancelAppointment: async (req, res) => {
+    const id = req.params.id;
+    console.log(id);
+    await appointmentModel.findByIdAndUpdate(
+      { _id: id },
+      { $set: { status: "Cancel" } }
+    );
+    res.json("success");
+  },
+
+  confirmAppointment: async (req, res) => {
+    const id = req.params.id;
+    await appointmentModel.findByIdAndUpdate(
+      { _id: id },
+      { $set: { status: "Confirmed" } }
+    );
+    res.json("success");
   },
 };

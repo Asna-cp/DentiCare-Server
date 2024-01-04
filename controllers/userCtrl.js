@@ -39,6 +39,7 @@ const registerController = async (req, res) => {
 
 //Login
 const loginController = async (req, res) => {
+  console.log("mANU");
   const { email, password } = req.body;
   try {
     const user = await userModel
@@ -85,7 +86,6 @@ const allpatients = async (req, res) => {
 //ADD APPOINTMENT
 const addAppointments = async (req, res) => {
   try {
-    console.log(req.body);
     const { firstName, lastName, email, phoneNumber, date, time } = req.body;
     const data = await new appointmentModel({
       firstName,
@@ -104,11 +104,9 @@ const addAppointments = async (req, res) => {
 //CHECK APPOINTMENTS COUNT
 
 const checkAppoTime = async (req, res) => {
-  console.log("ethi");
 try{
 const { time,date } = req.query;
   const appointments = await appointmentModel.find({time,date}).countDocuments();
-  console.log(appointments);
   res.status(200).json(appointments)
 }catch(err){
   res.status(500).json(err)
@@ -130,6 +128,7 @@ const viewTreatment = async (req, res) => {
 const doctorDetails = async (req, res) => {
   await doctorModel.find().then((data) => res.json(data));
 };
+
 //USER PROFILE
 
 const profile = (req, res) => {
