@@ -133,20 +133,26 @@ module.exports = {
 
   //ADD TREATMENTS
   addTreatments: async (req, res) => {
+    console.log("newcheck");
     try {
       const { treatmentname, description, about } = req.body.values;
       const { image } = req.body;
+      console.log("imagess" ,req.body);
       fileUploader(image)
         .then(async (img) => {
+          // console.log("img" ,img);
           await new treatmentModel({
             treatmentname,
             description,
-            image,
+            image:img,
             about,
           }).save();
           return res.json({ status: true });
         })
-        .catch((error) => {});
+        .catch((error) => {
+          console.log("servererror" , error);
+            res.json(error);
+        });
       // const treatment = await treatmentModel.create({ treatmentname, description, about });
       // return res.json(treatment);
     } catch (error) {
